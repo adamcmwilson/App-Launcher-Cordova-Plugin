@@ -168,7 +168,7 @@ public class Launcher extends CordovaPlugin {
 		});
 	}
 
-	private void launchApp(final String packageName, final JSONArray args)) {
+	private void launchApp(final String packageName, final JSONArray args) {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 
