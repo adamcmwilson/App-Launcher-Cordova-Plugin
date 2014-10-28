@@ -119,19 +119,19 @@ public class Launcher extends CordovaPlugin {
 			if (options.has("dataType")) {
 				dataType = options.getString("dataType");
 			}
-			launchAppWithData(packageName, options.getString("uri"), dataType);
+			launchAppWithData(packageName, options.getString("uri"), dataType, options);
 			return true;
 		} else if (options.has("packageName")) {
-			launchApp(options.getString("packageName"));
+			launchApp(options.getString("packageName"), options);
 			return true;
 		} else if (options.has("uri")) {
-			launchIntent(options.getString("uri"));
+			launchIntent(options.getString("uri"), options);
 			return true;
 		}
 		return false;
 	}
 
-	private void launchAppWithData(final String packageName, final String uri, final String dataType) throws JSONException {
+	private void launchAppWithData(final String packageName, final String uri, final String dataType, final JSONArray options) throws JSONException {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 		cordova.getThreadPool().execute(new LauncherRunnable(this.callback) {
@@ -147,6 +147,8 @@ public class Launcher extends CordovaPlugin {
 					intent.setPackage(packageName);
 				}
 
+				intent.putExtras(options);
+
 				try {
 					mycordova.startActivityForResult(plugin, intent, 0);
 					callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
@@ -160,7 +162,7 @@ public class Launcher extends CordovaPlugin {
 		});
 	}
 
-	private void launchApp(final String packageName) {
+	private void launchApp(final String packageName, final JSONArray options) {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 
@@ -168,6 +170,7 @@ public class Launcher extends CordovaPlugin {
 			public void run() {
 				final PackageManager pm = plugin.webView.getContext().getPackageManager();
 				final Intent launchIntent = pm.getLaunchIntentForPackage(packageName);
+				launchIntent.putExtras(options);
 				boolean appNotFound = launchIntent == null;
 
 				if (!appNotFound) {
@@ -187,13 +190,14 @@ public class Launcher extends CordovaPlugin {
 		});
 	}
 
-	private void launchIntent(final String uri) {
+	private void launchIntent(final String uri, final JSONArray options) {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 		cordova.getThreadPool().execute(new LauncherRunnable(this.callback) {
 			public void run() {
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setData(Uri.parse(uri));
+				intent.putExtras(options);
 				try {
 					mycordova.startActivityForResult(plugin, intent, 0);
 				} catch (ActivityNotFoundException e) {
