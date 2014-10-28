@@ -221,7 +221,7 @@ public class Launcher extends CordovaPlugin {
 
 	private Bundle getExtrasBundle(final JSONArray args) {
 		Bundle bundle = new Bundle();
-		bundle.putParcelableArray(EXTRA_ARGS, args);
+		bundle.putString(EXTRA_ARGS, args.toString());
 		return bundle;
 	}
 
