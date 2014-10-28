@@ -119,13 +119,13 @@ public class Launcher extends CordovaPlugin {
 			if (options.has("dataType")) {
 				dataType = options.getString("dataType");
 			}
-			launchAppWithData(packageName, options.getString("uri"), dataType, options);
+			launchAppWithData(packageName, options.getString("uri"), dataType, args);
 			return true;
 		} else if (options.has("packageName")) {
-			launchApp(options.getString("packageName"), options);
+			launchApp(options.getString("packageName"), args);
 			return true;
 		} else if (options.has("uri")) {
-			launchIntent(options.getString("uri"), options);
+			launchIntent(options.getString("uri"), args);
 			return true;
 		}
 		return false;
