@@ -18,13 +18,15 @@ import android.util.Log;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
+import java.io.File;
+
 public class Launcher extends CordovaPlugin {
 	public static final String TAG = "Launcher Plugin";
 	
 	public static final String ACTION_CAN_LAUNCH = "canLaunch";
 	public static final String ACTION_LAUNCH = "launch";
 
-	public static final Strring EXTRA_ARGS = "EXTRA_ARGS";
+	public static final String EXTRA_ARGS = "EXTRA_ARGS";
 
 	private static final int ACTIVITY_RESULT_CODE = 10101;
 
