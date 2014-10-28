@@ -19,11 +19,13 @@ import android.content.pm.PackageManager;
 
 public class Launcher extends CordovaPlugin {
 	public static final String TAG = "Launcher Plugin";
+	
 	public static final String ACTION_CAN_LAUNCH = "canLaunch";
 	public static final String ACTION_LAUNCH = "launch";
 
-	private static final int ACTIVITY_RESULT_CODE = 10101;
+	public static final Strring EXTRA_ARGS = "EXTRA_ARGS";
 
+	private static final int ACTIVITY_RESULT_CODE = 10101;
 
 	private CallbackContext callback;
 
@@ -113,6 +115,7 @@ public class Launcher extends CordovaPlugin {
 
 	private boolean launch(JSONArray args) throws JSONException {
 		final JSONObject options = args.getJSONObject(0);
+
 		if (options.has("uri") && (options.has("packageName") || options.has("dataType"))) {
 			String dataType = null;
 			String packageName = null;
@@ -134,7 +137,7 @@ public class Launcher extends CordovaPlugin {
 		return false;
 	}
 
-	private void launchAppWithData(final String packageName, final String uri, final String dataType, final JSONArray options) throws JSONException {
+	private void launchAppWithData(final String packageName, final String uri, final String dataType, final JSONArray args) throws JSONException {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 		cordova.getThreadPool().execute(new LauncherRunnable(this.callback) {
@@ -150,7 +153,7 @@ public class Launcher extends CordovaPlugin {
 					intent.setPackage(packageName);
 				}
 
-				intent.putExtras(options);
+				intent.putExtras(getExtrasBundle(args));
 
 				try {
 					mycordova.startActivityForResult(plugin, intent, 0);
@@ -165,7 +168,7 @@ public class Launcher extends CordovaPlugin {
 		});
 	}
 
-	private void launchApp(final String packageName, final JSONArray options) {
+	private void launchApp(final String packageName, final JSONArray args)) {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 
@@ -173,7 +176,7 @@ public class Launcher extends CordovaPlugin {
 			public void run() {
 				final PackageManager pm = plugin.webView.getContext().getPackageManager();
 				final Intent launchIntent = pm.getLaunchIntentForPackage(packageName);
-				launchIntent.putExtras(options);
+				launchIntent.putExtras(getExtrasBundle(args));
 				boolean appNotFound = launchIntent == null;
 
 				if (!appNotFound) {
@@ -193,14 +196,14 @@ public class Launcher extends CordovaPlugin {
 		});
 	}
 
-	private void launchIntent(final String uri, final JSONArray options) {
+	private void launchIntent(final String uri, final JSONArray args)) {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 		cordova.getThreadPool().execute(new LauncherRunnable(this.callback) {
 			public void run() {
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setData(Uri.parse(uri));
-				intent.putExtras(options);
+				intent.putExtras(getExtrasBundle(args));
 				try {
 					mycordova.startActivityForResult(plugin, intent, ACTIVITY_RESULT_CODE);
 				} catch (ActivityNotFoundException e) {
@@ -212,4 +215,11 @@ public class Launcher extends CordovaPlugin {
 			}
 		});
 	}
+
+	private Bundle getExtrasBundle(final JSONArray args) {
+		Bundle bundle = new Bundle();
+		bundle.put(EXTRA_ARGS, args);
+		return bundle;
+	}
+
 }
