@@ -196,7 +196,7 @@ public class Launcher extends CordovaPlugin {
 		});
 	}
 
-	private void launchIntent(final String uri, final JSONArray args)) {
+	private void launchIntent(final String uri, final JSONArray args) {
 		final CordovaInterface mycordova = cordova;
 		final CordovaPlugin plugin = this;
 		cordova.getThreadPool().execute(new LauncherRunnable(this.callback) {
