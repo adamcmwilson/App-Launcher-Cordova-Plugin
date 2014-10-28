@@ -22,6 +22,9 @@ public class Launcher extends CordovaPlugin {
 	public static final String ACTION_CAN_LAUNCH = "canLaunch";
 	public static final String ACTION_LAUNCH = "launch";
 
+	private static final int ACTIVITY_RESULT_CODE = 10101;
+
+
 	private CallbackContext callback;
 
 	private abstract class LauncherRunnable implements Runnable {
@@ -199,7 +202,7 @@ public class Launcher extends CordovaPlugin {
 				intent.setData(Uri.parse(uri));
 				intent.putExtras(options);
 				try {
-					mycordova.startActivityForResult(plugin, intent, 0);
+					mycordova.startActivityForResult(plugin, intent, ACTIVITY_RESULT_CODE);
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "Error: Activity for " + uri + " was not found.");
 					e.printStackTrace();
