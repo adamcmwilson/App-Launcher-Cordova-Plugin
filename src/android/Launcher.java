@@ -1,4 +1,4 @@
-package com.hutchind.cordova.plugins;
+package com.hutchind.cordova.plugins.launcher;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CallbackContext;
@@ -22,7 +22,7 @@ import java.io.File;
 
 public class Launcher extends CordovaPlugin {
 	public static final String TAG = "Launcher Plugin";
-	
+
 	public static final String ACTION_CAN_LAUNCH = "canLaunch";
 	public static final String ACTION_LAUNCH = "launch";
 
