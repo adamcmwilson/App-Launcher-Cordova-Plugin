@@ -23,22 +23,22 @@
 
 	<!-- ios -->
 	<platform name="ios">
-			<config-file target="config.xml" parent="/*">
-				<feature name="Launcher">
-						<param name="ios-package" value="Launcher" />
-				</feature>
-			</config-file>
-			<header-file src="src/ios/Launcher.h" />
-			<source-file src="src/ios/Launcher.m" />
+		<config-file target="config.xml" parent="/*">
+			<feature name="Launcher">
+					<param name="ios-package" value="Launcher" />
+			</feature>
+		</config-file>
+		<header-file src="src/ios/Launcher.h" />
+		<source-file src="src/ios/Launcher.m" />
 	</platform>
 
 	<!-- android -->
 	<platform name="android">
-			<config-file target="res/xml/config.xml" parent="/*">
-				<feature name="Launcher">
-						<param name="android-package" value="com.hutchind.cordova.plugins.Launcher" />
-				</feature>
-			</config-file>
-			<source-file src="src/android/Launcher.java" target-dir="src/com/hutchind/cordova/plugins/launcher" />
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="Launcher">
+				<param name="android-package" value="com.hutchind.cordova.plugins.launcher.Launcher" />
+			</feature>
+		</config-file>
+		<source-file src="src/android/Launcher.java" target-dir="src/com/hutchind/cordova/plugins/launcher" />
 	</platform>
 </plugin>
