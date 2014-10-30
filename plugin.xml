@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin
-		xmlns="http://apache.org/cordova/ns/plugins/1.0"
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		id="com.hutchind.cordova.plugins.launcher"
-		version="0.1.2">
+	xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.hutchind.cordova.plugins.launcher"
+	version="0.1.2">
 
 	<name>Launcher</name>
 
@@ -14,18 +14,18 @@
 	<license>MIT</license>
 
 	<engines>
-			<engine name="cordova" version=">=3.0.0" />
+		<engine name="cordova" version=">=3.0.0" />
 	</engines>
 
 	<js-module src="www/Launcher.js" name="Launcher">
-			<clobbers target="plugins.launcher" />
+		<clobbers target="Launcher" />
 	</js-module>
 
 	<!-- ios -->
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
 			<feature name="Launcher">
-					<param name="ios-package" value="Launcher" />
+				<param name="ios-package" value="Launcher" />
 			</feature>
 		</config-file>
 		<header-file src="src/ios/Launcher.h" />
